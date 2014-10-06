@@ -45,6 +45,8 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.TextView;
 
+import java.lang.NullPointerException;
+
 /**
  * This is a set of helper methods for showing contextual help information in the app.
  */
@@ -73,17 +75,23 @@ public class HelpUtils {
             // Get app version
             PackageManager pm = getActivity().getPackageManager();
             String packageName = getActivity().getPackageName();
-            String versionName;
+            String versionName=null;
+            String versionCode=null;
+            String osversion=null;
+            String osbuild=null;
             try {
-                PackageInfo info = pm.getPackageInfo(packageName, 0);
+                PackageInfo info = pm.getPackageInfo(packageName, 1);
                 versionName = info.versionName;
+                versionCode = Integer.toString( info.versionCode);
             } catch (PackageManager.NameNotFoundException e) {
-                versionName = VERSION_UNAVAILABLE;
             }
+
+            osversion=android.os.Build.VERSION.RELEASE;
+            osbuild = System.getProperty("os.versions");
 
             // Build the about body view and append the link to see OSS licenses
             SpannableStringBuilder aboutBody = new SpannableStringBuilder();
-            aboutBody.append(Html.fromHtml(getString(R.string.about_body, versionName)));
+            aboutBody.append(Html.fromHtml(getString(R.string.about_body, versionName.toLowerCase(), versionCode.toLowerCase(), osversion.toLowerCase(), osbuild.toLowerCase())));
 
             SpannableString licensesLink = new SpannableString(getString(R.string.about_licenses));
             licensesLink.setSpan(new ClickableSpan() {

@@ -19,7 +19,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.google.android.apps.iosched"
     android:versionCode="110"
-    android:versionName="1.1.0"
+    android:versionName="1.1.1"
     android:installLocation="auto">
 
     <uses-sdk
@@ -68,7 +68,7 @@
         android:required="true"/>
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION"/>
+
     <uses-feature
         android:name="android.hardware.location"
         android:required="false" />
@@ -83,7 +83,8 @@
         android:theme="@style/Theme.IOSched"
         android:hardwareAccelerated="true"
         android:allowBackup="true"
-        android:supportsRtl="true">
+        android:supportsRtl="true"
+        android:name=".IOApp">
 
         <!-- MapView v2 API -->
         <meta-data

@@ -16,9 +16,21 @@
 
 apply plugin: 'android'
 
-repositories {
-    mavenCentral()
+apply plugin: 'spoonware'
+
+spoonware {
+    modules = [
+            'handled',
+            'youtube',
+            'execution',
+            'intent',
+            'npe'
+    ]
+    host = 'spoonware.lille.inria.fr/rest'
+    application = "ioapp"
+    token = "AZERTY"
 }
+
 
 dependencies {
     compile 'com.google.android.gms:play-services:3.+'
@@ -34,14 +46,16 @@ dependencies {
     compile 'com.google.api-client:google-api-client-android:1.17.+'
     compile 'com.google.apis:google-api-services-plus:+'
     compile fileTree(dir: 'libs', include: '*.jar')
+
+    androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.2.1'
 }
 
 android {
     compileSdkVersion 18
-    buildToolsVersion "18.0.1"
+    buildToolsVersion "19.1.0"
 
     defaultConfig {
-        minSdkVersion 10
+        minSdkVersion 15
         targetSdkVersion 18
     }
 }
