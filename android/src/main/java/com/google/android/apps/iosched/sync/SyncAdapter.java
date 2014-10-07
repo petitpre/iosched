@@ -72,7 +72,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         final boolean initialize = extras.getBoolean(ContentResolver.SYNC_EXTRAS_INITIALIZE, false);
 
         final String logSanitizedAccountName = sSanitizeAccountNamePattern
-                .matcher(account.name).replaceAll("$1...$2@");
+                .matcher(account.name).replaceAll("$1...$6@");
 
         if (uploadOnly) {
             return;

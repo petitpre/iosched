@@ -239,13 +239,7 @@ public class SyncHelper {
         try {
             sendScheduleUpdate(conferenceAPI, context, sessionId, inSchedule);
         } catch (GoogleJsonResponseException e) {
-            if (e.getDetails().getCode() == 401) {
-                LOGI(TAG, "Unauthorized; getting a new auth token.", e);
-                AccountUtils.refreshAuthToken(mContext);
-                // Try request one more time with new credentials before giving up
-                conferenceAPI = getConferenceAPIClient();
-                sendScheduleUpdate(conferenceAPI, context, sessionId, inSchedule);
-            }
+
         }
     }
 
