@@ -96,11 +96,7 @@ public class HelpUtils {
             // Build the about body view and append the link to see OSS licenses
 
             SpannableStringBuilder aboutBody = new SpannableStringBuilder();
-            try {
-                aboutBody.append(Html.fromHtml(getString(R.string.about_body, versionName.toLowerCase(), versionCode.toLowerCase(), osversion.toLowerCase(), osbuild.toLowerCase())));
-            } catch (NullPointerException ex) {
-                Log.e(TAG, ex.getMessage(), ex);
-            }
+            aboutBody.append(Html.fromHtml(getString(R.string.about_body, versionName.toLowerCase(), versionCode.toLowerCase(), osversion.toLowerCase(), osbuild.toLowerCase())));
 
             SpannableString licensesLink = new SpannableString(getString(R.string.about_licenses));
             licensesLink.setSpan(new ClickableSpan() {
