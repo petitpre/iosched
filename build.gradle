@@ -17,8 +17,9 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     repositories {
-        mavenCentral()
         mavenLocal()
+        mavenCentral()
+        maven { url "http://spoon.gforge.inria.fr/repositories/snapshots/" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:0.13.0'
