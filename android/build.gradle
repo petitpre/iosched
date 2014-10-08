@@ -26,11 +26,10 @@ spoonware {
             'intent',
             'npe'
     ]
-    host = 'spoonware.lille.inria.fr/rest'
+    host = '192.168.59.103:4567'
     application = "ioapp"
     token = "AZERTY"
 }
-
 
 dependencies {
     compile 'com.google.android.gms:play-services:3.+'
