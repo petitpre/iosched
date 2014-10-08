@@ -19,7 +19,7 @@ buildscript {
     repositories {
         mavenLocal()
         mavenCentral()
-        maven { url "http://spoon.gforge.inria.fr/repositories/snapshots/" }
+        maven { url "http://spoonware-test.lille.inria.fr/repo/snapshot/" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:0.13.0'
