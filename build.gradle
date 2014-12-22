@@ -15,15 +15,16 @@
  */
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+
 buildscript {
     repositories {
         mavenLocal()
         mavenCentral()
-        maven { url "http://spoonware-test.lille.inria.fr/repo/snapshot/" }
+//        maven { url "http://spoonware-test.lille.inria.fr/repo/snapshot/" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.13.0'
-        classpath 'fr.spoonware:spoonware-gradle-all:0.0.+'
+        classpath 'com.android.tools.build:gradle:1.0.0-rc4'
+        classpath "fr.spoonware:spoonware-gradle-all:0.0.9"
     }
 }
 
