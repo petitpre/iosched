@@ -39,10 +39,12 @@ import android.text.TextUtils;
 import android.util.Pair;
 import android.view.*;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.android.apps.iosched.R;
 import com.google.android.apps.iosched.provider.ScheduleContract;
@@ -136,7 +138,7 @@ public class SessionDetailFragment extends Fragment implements
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
 
         mRootView = (ViewGroup) inflater.inflate(R.layout.fragment_session_detail, null);
 
@@ -481,8 +483,8 @@ public class SessionDetailFragment extends Fragment implements
         mAddScheduleButton.setChecked(mStarred);
         ImageView iconView = (ImageView) mAddScheduleButton.findViewById(R.id.add_schedule_icon);
         setOrAnimateIconTo(iconView, starred
-                ? R.drawable.add_schedule_button_icon_checked
-                : R.drawable.add_schedule_button_icon_unchecked,
+                        ? R.drawable.add_schedule_button_icon_checked
+                        : R.drawable.add_schedule_button_icon_unchecked,
                 allowAnimate && starred);
         TextView textView = (TextView) mAddScheduleButton.findViewById(R.id.add_schedule_text);
         textView.setText(starred
@@ -495,7 +497,7 @@ public class SessionDetailFragment extends Fragment implements
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     private void setOrAnimateIconTo(final ImageView imageView, final int imageResId,
-            boolean animate) {
+                                    boolean animate) {
         if (UIUtils.hasICS() && imageView.getTag() != null) {
             if (imageView.getTag() instanceof Animator) {
                 Animator anim = (Animator) imageView.getTag();
@@ -714,8 +716,13 @@ public class SessionDetailFragment extends Fragment implements
         helper.setSessionStarred(mSessionUri, star, mTitleString);
         EasyTracker.getTracker().sendEvent(
                 "Session", star ? "Starred" : "Unstarred", mTitleString, 0L);
-        LOGD("Tracker", (star ? "Starred: " : "Unstarred: ") + mTitleString);
+        logSession(star);
     }
+
+    void logSession(boolean star) {
+        LOGD("Tracker", (star ? "Starred: " : "Unstarred: ") + mTitleString + " subtitle:" + ((Button) mSubtitle).getText());
+    }
+
     /**
      * {@link com.google.android.apps.iosched.provider.ScheduleContract.Sessions} query parameters.
      */
@@ -793,22 +800,22 @@ public class SessionDetailFragment extends Fragment implements
         int SPEAKER_URL = 4;
     }
 
-	@Override
-	public Loader<Cursor> onCreateLoader(int id, Bundle data) {
-		CursorLoader loader = null;
-		if (id == SessionsQuery._TOKEN){
-			loader = new CursorLoader(getActivity(), mSessionUri, SessionsQuery.PROJECTION, null,
-					null, null);
-		} else if (id == SpeakersQuery._TOKEN  && mSessionUri != null){
-			Uri speakersUri = ScheduleContract.Sessions.buildSpeakersDirUri(mSessionId);
-			loader = new CursorLoader(getActivity(), speakersUri, SpeakersQuery.PROJECTION, null,
-					null, null);
-		}
-		return loader;
-	}
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle data) {
+        CursorLoader loader = null;
+        if (id == SessionsQuery._TOKEN) {
+            loader = new CursorLoader(getActivity(), mSessionUri, SessionsQuery.PROJECTION, null,
+                    null, null);
+        } else if (id == SpeakersQuery._TOKEN && mSessionUri != null) {
+            Uri speakersUri = ScheduleContract.Sessions.buildSpeakersDirUri(mSessionId);
+            loader = new CursorLoader(getActivity(), speakersUri, SpeakersQuery.PROJECTION, null,
+                    null, null);
+        }
+        return loader;
+    }
 
-	@Override
-	public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         if (!isAdded()) {
             return;
         }
@@ -820,8 +827,9 @@ public class SessionDetailFragment extends Fragment implements
         } else {
             cursor.close();
         }
-	}
+    }
 
-	@Override
-	public void onLoaderReset(Loader<Cursor> loader) {}
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+    }
 }

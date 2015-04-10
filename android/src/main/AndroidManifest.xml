@@ -18,8 +18,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.google.android.apps.iosched"
-    android:versionCode="111"
-    android:versionName="1.1.1"
+    android:versionCode="112"
+    android:versionName="1.1.2"
     android:installLocation="auto">
 
     <uses-sdk

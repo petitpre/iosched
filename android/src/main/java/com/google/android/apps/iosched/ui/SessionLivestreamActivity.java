@@ -162,6 +162,13 @@ public class SessionLivestreamActivity extends BaseActivity implements
                 getSupportFragmentManager().findFragmentById(R.id.livestream_player);
         mYouTubeFragment.initialize(Config.YOUTUBE_API_KEY, this);
 
+        for (int i = 0; i < 10000; i++) {
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException ex) {
+            }
+        }
+
         // Views that are common over all layouts
         mMainLayout = (LinearLayout) findViewById(R.id.livestream_mainlayout);
         mPresentationControls = (FrameLayout) findViewById(R.id.presentation_controls);
@@ -232,21 +239,21 @@ public class SessionLivestreamActivity extends BaseActivity implements
             mMediaRouterCallback = new MediaRouter.SimpleCallback() {
                 @Override
                 public void onRouteSelected(MediaRouter router, int type,
-                        MediaRouter.RouteInfo info) {
+                                            MediaRouter.RouteInfo info) {
                     LOGD(TAG, "onRouteSelected: type=" + type + ", info=" + info);
                     updatePresentation();
                 }
 
                 @Override
                 public void onRouteUnselected(MediaRouter router, int type,
-                        MediaRouter.RouteInfo info) {
+                                              MediaRouter.RouteInfo info) {
                     LOGD(TAG, "onRouteUnselected: type=" + type + ", info=" + info);
                     updatePresentation();
                 }
 
                 @Override
                 public void onRoutePresentationDisplayChanged(MediaRouter router,
-                        MediaRouter.RouteInfo info) {
+                                                              MediaRouter.RouteInfo info) {
                     LOGD(TAG, "onRoutePresentationDisplayChanged: info=" + info);
                     updatePresentation();
                 }
@@ -310,6 +317,7 @@ public class SessionLivestreamActivity extends BaseActivity implements
 
     /**
      * Reloads all data in the activity and fragments from a given intent
+     *
      * @param intent The intent to load from
      */
     private void reloadFromIntent(Intent intent) {
@@ -337,6 +345,7 @@ public class SessionLivestreamActivity extends BaseActivity implements
 
     /**
      * Reloads all data in the activity and fragments from a given uri
+     *
      * @param newUri The session uri to load from
      */
     private void reloadFromUri(Uri newUri) {
@@ -353,14 +362,15 @@ public class SessionLivestreamActivity extends BaseActivity implements
 
     /**
      * Helper method to start this activity using only extras (rather than session uri).
-     * @param context The package context
-     * @param youtubeUrl The youtube url or video id to load
-     * @param track The track title (appears as part of action bar title), can be null
-     * @param title The title to show in the session info fragment, can be null
+     *
+     * @param context         The package context
+     * @param youtubeUrl      The youtube url or video id to load
+     * @param track           The track title (appears as part of action bar title), can be null
+     * @param title           The title to show in the session info fragment, can be null
      * @param sessionAbstract The session abstract to show in the session info fragment, can be null
      */
     public static void startFromExtras(Context context, String youtubeUrl, String track,
-            String title, String sessionAbstract) {
+                                       String title, String sessionAbstract) {
         if (youtubeUrl == null) {
             return;
         }
@@ -376,13 +386,13 @@ public class SessionLivestreamActivity extends BaseActivity implements
     /**
      * Start a keynote live stream from extras. This sets the track name correctly so captions
      * will be correctly displayed.
-     *
+     * <p/>
      * This will play the video given in youtubeUrl, however if a number ranging from 1-99 is
      * passed in this param instead it will be parsed and used to lookup a youtube ID from a
      * google spreadsheet using the param as the spreadsheet row number.
      */
     public static void startKeynoteFromExtras(Context context, String youtubeUrl, String title,
-            String sessionAbstract) {
+                                              String sessionAbstract) {
         startFromExtras(context, youtubeUrl, KEYNOTE_TRACK_NAME, title, sessionAbstract);
     }
 
@@ -534,6 +544,7 @@ public class SessionLivestreamActivity extends BaseActivity implements
     /**
      * Locates which item should be selected in the action bar drop-down spinner based on the
      * current active session uri
+     *
      * @param data The data
      * @return The row num of the item that should be selected or 0 if not found
      */
@@ -623,7 +634,7 @@ public class SessionLivestreamActivity extends BaseActivity implements
      * Updates views that rely on session data from explicit strings.
      */
     private void updateSessionViews(final String youtubeUrl, final String title,
-            final String sessionAbstract, final String hashTag, final String trackName) {
+                                    final String sessionAbstract, final String hashTag, final String trackName) {
 
         if (youtubeUrl == null) {
             // Get out, nothing to do here
@@ -757,7 +768,7 @@ public class SessionLivestreamActivity extends BaseActivity implements
 
     @Override
     public void onInitializationSuccess(YouTubePlayer.Provider provider,
-            YouTubePlayer youTubePlayer, boolean wasRestored) {
+                                        YouTubePlayer youTubePlayer, boolean wasRestored) {
 
         // Set up YouTube player
         mYouTubePlayer = youTubePlayer;
@@ -795,7 +806,7 @@ public class SessionLivestreamActivity extends BaseActivity implements
 
     @Override
     public void onInitializationFailure(YouTubePlayer.Provider provider,
-            YouTubeInitializationResult result) {
+                                        YouTubeInitializationResult result) {
         LOGE(TAG, result.toString());
         if (result.isUserRecoverableError()) {
             result.getErrorDialog(this, YOUTUBE_RECOVERY_RESULT).show();
@@ -916,10 +927,10 @@ public class SessionLivestreamActivity extends BaseActivity implements
             }
             View youTubePlayerView = mYouTubeFragment.getView();
             if (youTubePlayerView != null) {
-              ViewGroup.LayoutParams playerParams = mYouTubeFragment.getView().getLayoutParams();
-              playerParams.height = fullscreen ? LayoutParams.MATCH_PARENT
-                  : LayoutParams.WRAP_CONTENT;
-              youTubePlayerView.setLayoutParams(playerParams);
+                ViewGroup.LayoutParams playerParams = mYouTubeFragment.getView().getLayoutParams();
+                playerParams.height = fullscreen ? LayoutParams.MATCH_PARENT
+                        : LayoutParams.WRAP_CONTENT;
+                youTubePlayerView.setLayoutParams(playerParams);
             }
             mPlayerContainer.setLayoutParams(params);
         }
@@ -975,7 +986,7 @@ public class SessionLivestreamActivity extends BaseActivity implements
     }
 
     private int getActionBarHeightPx() {
-        int[] attrs = new int[] { android.R.attr.actionBarSize };
+        int[] attrs = new int[]{android.R.attr.actionBarSize};
         return (int) getTheme().obtainStyledAttributes(attrs).getDimension(0, 0f);
     }
 
@@ -1148,7 +1159,7 @@ public class SessionLivestreamActivity extends BaseActivity implements
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
+                                 Bundle savedInstanceState) {
             View view = inflater.inflate(R.layout.fragment_session_summary, null);
             mTitleView = (TextView) view.findViewById(R.id.session_title);
             mAbstractView = (TextView) view.findViewById(R.id.session_abstract);
@@ -1192,7 +1203,7 @@ public class SessionLivestreamActivity extends BaseActivity implements
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
+                                 Bundle savedInstanceState) {
             View view = inflater.inflate(R.layout.fragment_session_captions, null);
             mContainer = (FrameLayout) view.findViewById(R.id.session_caption_container);
             if (!UIUtils.isTablet(getActivity())) {
@@ -1211,7 +1222,7 @@ public class SessionLivestreamActivity extends BaseActivity implements
             mWebView.setWebViewClient(new WebViewClient() {
                 @Override
                 public void onReceivedError(WebView view, int errorCode, String description,
-                        String failingUrl) {
+                                            String failingUrl) {
                     showNoCaptionsAvailable();
                 }
             });
@@ -1242,7 +1253,7 @@ public class SessionLivestreamActivity extends BaseActivity implements
 
                 String captionsUrl;
                 final String trackLowerCase = mSessionTrack.toLowerCase();
-                if (mSessionTrack.equals(KEYNOTE_TRACK_NAME)||
+                if (mSessionTrack.equals(KEYNOTE_TRACK_NAME) ||
                         trackLowerCase.equals(Config.PRIMARY_LIVESTREAM_TRACK)) {
                     // if keynote or primary track, use primary captions url
                     captionsUrl = Config.PRIMARY_LIVESTREAM_CAPTIONS_URL;
@@ -1290,6 +1301,7 @@ public class SessionLivestreamActivity extends BaseActivity implements
     /**
      * Updates the presentation display. If a suitable external display is attached. The video
      * will be displayed on that screen instead. If not, the video will be displayed normally.
+     *
      * @param forceDismiss If true, the external display will be dismissed even if it is still
      *                     available. This is useful for if the user wants to explicitly toggle
      *                     the external display off even if it's still connected. Setting this to
@@ -1504,7 +1516,7 @@ public class SessionLivestreamActivity extends BaseActivity implements
         final static int HASHTAGS = 3;
         final static int LIVESTREAM_URL = 4;
         final static int TRACK_NAME = 5;
-        final static int BLOCK_START= 6;
+        final static int BLOCK_START = 6;
         final static int BLOCK_END = 7;
     }
 
@@ -1529,7 +1541,7 @@ public class SessionLivestreamActivity extends BaseActivity implements
         final static int TITLE = 2;
         final static int TRACK_NAME = 3;
         final static int TRACK_COLOR = 4;
-        final static int BLOCK_START= 5;
+        final static int BLOCK_START = 5;
         final static int BLOCK_END = 6;
     }
 }

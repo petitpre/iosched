@@ -95,10 +95,10 @@ public class ScheduleFragment extends ListFragment implements
     }
 
     @Override
-	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
         persistActionModeState(outState);
-	}
+    }
 
     private void persistActionModeState(Bundle outState) {
         if (outState != null && mActionModeStarted && mSelectedItemData != null) {
@@ -146,9 +146,9 @@ public class ScheduleFragment extends ListFragment implements
         }
     }
 
-	@Override
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(
                 R.layout.fragment_list_with_empty_container, container, false);
         inflater.inflate(R.layout.empty_waiting_for_sync,
@@ -176,19 +176,19 @@ public class ScheduleFragment extends ListFragment implements
 
     private final SharedPreferences.OnSharedPreferenceChangeListener mPrefChangeListener =
             new SharedPreferences.OnSharedPreferenceChangeListener() {
-        @Override
-        public void onSharedPreferenceChanged(SharedPreferences sp, String key) {
-            if (isAdded() && mAdapter != null) {
-                if (PrefUtils.PREF_LOCAL_TIMES.equals(key)) {
-                    PrefUtils.isUsingLocalTime(getActivity(), true); // force update
-                    mAdapter.notifyDataSetInvalidated();
-                } else if (PrefUtils.PREF_ATTENDEE_AT_VENUE.equals(key)) {
-                    PrefUtils.isAttendeeAtVenue(getActivity(), true); // force update
-                    getLoaderManager().restartLoader(0, null, ScheduleFragment.this);
+                @Override
+                public void onSharedPreferenceChanged(SharedPreferences sp, String key) {
+                    if (isAdded() && mAdapter != null) {
+                        if (PrefUtils.PREF_LOCAL_TIMES.equals(key)) {
+                            PrefUtils.isUsingLocalTime(getActivity(), true); // force update
+                            mAdapter.notifyDataSetInvalidated();
+                        } else if (PrefUtils.PREF_ATTENDEE_AT_VENUE.equals(key)) {
+                            PrefUtils.isAttendeeAtVenue(getActivity(), true); // force update
+                            getLoaderManager().restartLoader(0, null, ScheduleFragment.this);
+                        }
+                    }
                 }
-            }
-        }
-    };
+            };
 
     private final ContentObserver mObserver = new ContentObserver(new Handler()) {
         @Override
@@ -236,9 +236,9 @@ public class ScheduleFragment extends ListFragment implements
                 + ScheduleContract.Blocks.BLOCK_TYPE + " != '"
                 + ScheduleContract.Blocks.BLOCK_TYPE_OFFICE_HOURS
                 + "' OR " + ScheduleContract.Blocks.NUM_STARRED_SESSIONS + ">0)";
-        String excludeSandbox = "("+ScheduleContract.Blocks.BLOCK_TYPE + " != '"
-                + ScheduleContract.Blocks.BLOCK_TYPE_SANDBOX +"')";
-        
+        String excludeSandbox = "(" + ScheduleContract.Blocks.BLOCK_TYPE + " != '"
+                + ScheduleContract.Blocks.BLOCK_TYPE_SANDBOX + "')";
+
         return new CursorLoader(getActivity(),
                 ScheduleContract.Blocks.CONTENT_URI,
                 BlocksQuery.PROJECTION,
@@ -410,12 +410,14 @@ public class ScheduleFragment extends ListFragment implements
                     extraButton.setEnabled(!mActionModeStarted);
                     if (mSelectedItemData != null && mActionModeStarted
                             && mSelectedItemData.get(BlocksQuery.STARRED_SESSION_ID, "").equals(
-                                    starredSessionId)) {
+                            starredSessionId)) {
                         primaryTouchTargetView.setSelected(true);
                         mLongClickedView = primaryTouchTargetView;
                     }
 
-                    final Runnable restartActionMode = new Runnable() {
+
+
+                      Runnable restart = new Runnable() {
                         @Override
                         public void run() {
                             boolean currentlySelected = false;
@@ -451,7 +453,7 @@ public class ScheduleFragment extends ListFragment implements
                             primaryTouchTargetView.setSelected(true);
                         }
                     };
-
+                    final Runnable restartActionMode = restart;
                     primaryTouchTargetView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -498,7 +500,7 @@ public class ScheduleFragment extends ListFragment implements
 
                             final Uri sessionsUri = ScheduleContract.Blocks
                                     .buildStarredSessionsUri(
-                                    blockId);
+                                            blockId);
                             final Intent intent = new Intent(Intent.ACTION_VIEW, sessionsUri);
                             intent.putExtra(Intent.EXTRA_TITLE, blockTimeString);
                             startActivity(intent);

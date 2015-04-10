@@ -15,23 +15,6 @@
  */
 
 apply plugin: 'android'
-apply plugin: 'spoonware'
-
-spoonware {
-    modules = [
-            'fr.spoonware.handled.HandledModule',
-            'fr.spoonware.npe.NpeModule',
-            // 'fr.spoonware.superlogs.ExecutionModule',
-            'fr.spoonware.youtube.YoutubeModule',
-            'fr.spoonware.hotpatches.HotFixesModule'
-    ]
-    // for demo :
-    // host = '10.0.3.2:4567/rest'
-    // for testing :
-    host = 'spoonware-test.lille.inria.fr/rest/'
-    application = "iosched"
-    token = "AZERTY"
-}
 
 dependencies {
     compile "fr.spoonware:spoonware-android-all:0.0.9"
