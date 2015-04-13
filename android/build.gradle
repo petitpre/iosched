@@ -17,7 +17,6 @@
 apply plugin: 'android'
 
 dependencies {
-    compile "fr.spoonware:spoonware-android-all:0.0.9"
     compile 'com.google.android.gms:play-services:3.+'
     compile 'com.android.support:appcompat-v7:18.0.0'
     compile 'com.google.android.apps.dashclock:dashclock-api:+'
