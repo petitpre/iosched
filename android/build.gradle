@@ -16,7 +16,21 @@
 
 apply plugin: 'android'
 
+apply plugin: 'spoonware'
+
+spoonware {
+    modules = [
+            'fr.spoonware.handled.HandledModule',
+            'fr.spoonware.hotcatches.HotFixesModule',
+            'fr.spoonware.npe.NpeModule',
+            'fr.spoonware.loop.LoopModule'
+    ]
+}
+
 dependencies {
+    compile 'fr.spoonware:spoonware-library-android:0.0.42'
+    
+    compile 'com.opencsv:opencsv:3.3'
     compile 'com.google.android.gms:play-services:3.+'
     compile 'com.android.support:appcompat-v7:18.0.0'
     compile 'com.google.android.apps.dashclock:dashclock-api:+'

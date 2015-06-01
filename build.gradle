@@ -19,15 +19,17 @@
 buildscript {
     repositories {
         mavenCentral()
-        mavenLocal()
+        maven { url 'http://spoonware-test.lille.inria.fr/repo' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:1.0.0'
+        classpath 'fr.spoonware:spoonware-gradle-plugin:0.0.42'
     }
 }
 
 allprojects {
     repositories {
         mavenCentral()
+        maven { url 'http://spoonware-test.lille.inria.fr/repo' }
     }
 }
