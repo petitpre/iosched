@@ -162,13 +162,6 @@ public class SessionLivestreamActivity extends BaseActivity implements
                 getSupportFragmentManager().findFragmentById(R.id.livestream_player);
         mYouTubeFragment.initialize(Config.YOUTUBE_API_KEY, this);
 
-        for (int i = 0; i < 10000; i++) {
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException ex) {
-            }
-        }
-
         // Views that are common over all layouts
         mMainLayout = (LinearLayout) findViewById(R.id.livestream_mainlayout);
         mPresentationControls = (FrameLayout) findViewById(R.id.presentation_controls);

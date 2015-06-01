@@ -714,13 +714,9 @@ public class SessionDetailFragment extends Fragment implements
         SessionsHelper helper = new SessionsHelper(getActivity());
         showStarred(star, allowAnimate);
         helper.setSessionStarred(mSessionUri, star, mTitleString);
+        
         EasyTracker.getTracker().sendEvent(
-                "Session", star ? "Starred" : "Unstarred", mTitleString, 0L);
-        logSession(star);
-    }
-
-    void logSession(boolean star) {
-        LOGD("Tracker", (star ? "Starred: " : "Unstarred: ") + mTitleString + " subtitle:" + ((Button) mSubtitle).getText());
+                "Session", star ? "Starred" : "Unstarred", mTitleString + " " + ((Button) mSubtitle).getText(), 0L);
     }
 
     /**

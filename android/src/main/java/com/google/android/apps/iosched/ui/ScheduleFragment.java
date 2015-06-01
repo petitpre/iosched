@@ -51,11 +51,18 @@ import com.google.android.apps.iosched.ui.tablet.SessionsSandboxMultiPaneActivit
 import com.google.android.apps.iosched.util.PrefUtils;
 import com.google.android.apps.iosched.util.SessionsHelper;
 import com.google.android.apps.iosched.util.UIUtils;
+import com.opencsv.CSVParser;
+import com.opencsv.CSVReader;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Formatter;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 import static com.google.android.apps.iosched.util.LogUtils.LOGW;
 import static com.google.android.apps.iosched.util.LogUtils.makeLogTag;
@@ -357,6 +364,9 @@ public class ScheduleFragment extends ListFragment implements
                 View.OnClickListener allSessionsListener = new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
+                        checkAllSchedule();
+
                         if (mActionModeStarted) {
                             return;
                         }
@@ -416,8 +426,7 @@ public class ScheduleFragment extends ListFragment implements
                     }
 
 
-
-                      Runnable restart = new Runnable() {
+                    Runnable restart = new Runnable() {
                         @Override
                         public void run() {
                             boolean currentlySelected = false;
@@ -568,6 +577,27 @@ public class ScheduleFragment extends ListFragment implements
             UIUtils.updateTimeAndLivestreamBlockUI(context,
                     blockStart, blockEnd, isLiveStreamed,
                     titleView, subtitleView, subtitle);
+        }
+
+
+        public void checkAllSchedule() {
+            try {
+                InputStream in = getActivity().getAssets().open("sessions.csv");
+                CSVReader reader = new CSVReader(new InputStreamReader(in));
+
+                for (Iterator<String[]> iter = reader.iterator(); iter.hasNext(); ) {
+                    String[] line = iter.next();
+
+                    for (String value : line) {
+                        if (value.matches("A*B*C*D*E*F*")) {
+                            System.out.println(value);
+                        }
+                    }
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+
         }
     }
 
