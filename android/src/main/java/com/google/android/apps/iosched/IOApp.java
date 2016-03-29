@@ -1,7 +1,8 @@
 package com.google.android.apps.iosched;
 
 import android.app.Application;
-import android.widget.Toast;
+import com.instabug.library.IBGInvocationEvent;
+import com.instabug.library.Instabug;
 
 
 /**
@@ -12,5 +13,10 @@ public class IOApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        new Instabug.Builder(this, "e8b1f7d408208b69c3a4d5ddc70d1ebe")
+                .setInvocationEvent(IBGInvocationEvent.IBGInvocationEventShake)
+                .build();
+
     }
 }

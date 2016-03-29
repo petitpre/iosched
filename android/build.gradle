@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 dependencies {
-    compile "fr.spoonware:spoonware-android-all:0.0.9"
-    compile 'com.google.android.gms:play-services:3.+'
+    compile 'com.instabug.library:instabug:2+'
+
+    compile 'com.google.android.gms:play-services:8.+'
     compile 'com.android.support:appcompat-v7:18.0.0'
     compile 'com.google.android.apps.dashclock:dashclock-api:+'
     compile 'com.google.code.gson:gson:2.+'
@@ -36,11 +37,11 @@ dependencies {
 }
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "19.1.0"
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 19
+        targetSdkVersion 23
     }
 }
